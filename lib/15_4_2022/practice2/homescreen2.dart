@@ -9,12 +9,12 @@ class HomeScreen152 extends StatefulWidget {
 }
 
 class _HomeScreen152State extends State<HomeScreen152> {
-  late Future<InfoAPI> getData;
+  late Future<List<InfoAPI>> getData;
 
   @override
   void initState() {
     super.initState();
-    // getData = fetchData();
+    getData = fetchData();
   }
 
   @override
@@ -23,7 +23,7 @@ class _HomeScreen152State extends State<HomeScreen152> {
       appBar: AppBar(title: const Text('Fetch From API')),
       body: SingleChildScrollView(
         child: FutureBuilder<List<InfoAPI>>(
-            future: fetchData(),
+            future: getData, //fetchData(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return Column(

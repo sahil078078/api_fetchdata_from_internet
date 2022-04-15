@@ -29,8 +29,8 @@ Future<List<InfoAPI>> fetchData() async {
   final response = await http.get(Uri.parse(URL));
   if (response.statusCode == 200) {
     List temp = jsonDecode(response.body);
-
     List<InfoAPI> list = temp.map((e) => InfoAPI.fromJson(e)).toList();
+
     return list;
   } else {
     throw Exception("Failed to load data");
