@@ -3,7 +3,7 @@ import 'dart:convert';
 
 class UserInfo182 {
   String msg;
-  Data data;
+  List<Data> data;
 
   UserInfo182({
     required this.msg,
@@ -13,7 +13,7 @@ class UserInfo182 {
   factory UserInfo182.fromJson(Map<String, dynamic> json) {
     return UserInfo182(
       msg: json['msg'],
-      data: json['data'].map((e) => Data.fromJson(e)),
+      data: List<Data>.from(json['data'].map((x) => Data.fromJson(x))),
     );
   }
 }
@@ -23,16 +23,16 @@ class Data {
   String name;
   String mobile_number;
   String email;
-  String date_of_birth;
-  String gender;
-  String house_no;
-  String street_address;
-  String city;
-  String state;
-  String pincode;
-  String profile_image;
-  bool is_active;
-  String createAt;
+  String? date_of_birth;
+  String? gender;
+  String? house_no;
+  String? street_address;
+  String? city;
+  String? state;
+  String? pincode;
+  String? profile_image;
+  bool? is_active;
+  String? createAt;
 
   Data({
     required this.id,
@@ -70,12 +70,17 @@ class Data {
   }
 }
 
-Future<List<UserInfo182>> fetchData() async {
+Future<UserInfo182> fetchData() async {
   String url = 'https://jsonkeeper.com/b/2S6J';
   final response = await http.get(Uri.parse(url));
-  List<UserInfo182> list = jsonDecode(response.body);
+  final temp = jsonDecode(response.body);
+  print(temp.runtimeType);
+  print(response.statusCode);
   if (response.statusCode == 200) {
-    return list;
+    UserInfo182 userInstance = UserInfo182.fromJson(temp);
+    print(userInstance);
+    print(userInstance.runtimeType);
+    return userInstance;
   } else {
     throw Exception('Failed TO fetch Data');
   }
