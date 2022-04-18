@@ -41,6 +41,7 @@ class _HomeScreen181State extends State<HomeScreen181> {
                             .elementAt(index)
                             .company
                             .catchPhrase),
+                        Text(snapshot.data!.elementAt(index).company.name),
                       ],
                     );
                   });
