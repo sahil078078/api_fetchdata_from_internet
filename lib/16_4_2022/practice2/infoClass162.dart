@@ -2,27 +2,30 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class UserInfo162 {
-  String? name;
-  String? exp;
-  String? worktech;
-  String? image;
-  String? contact;
-  String? lang;
-  String? framwork;
-  String? wotktime;
+  int userId;
+  String name;
+  int exp;
+  String worktech;
+  String image;
+  int contact;
+  String lang;
+  String framwork;
+  String wotktime;
 
   UserInfo162(
-      {this.name,
-      this.exp,
-      this.worktech,
-      this.image,
-      this.contact,
-      this.lang,
-      this.framwork,
-      this.wotktime});
+      {required this.userId,
+      required this.name,
+      required this.exp,
+      required this.worktech,
+      required this.image,
+      required this.contact,
+      required this.lang,
+      required this.framwork,
+      required this.wotktime});
 
   factory UserInfo162.fromJson(Map<String, dynamic> json) {
     return UserInfo162(
+      userId: json['userID'],
       name: json['name'],
       exp: json['exp'],
       worktech: json['worktech'],
@@ -35,11 +38,14 @@ class UserInfo162 {
   }
 }
 
-Future<UserInfo162> fetchData() async {
+Future<List<UserInfo162>> fetchData() async {
   String URL = 'https://jsonkeeper.com/b/O5KR';
-  var responce = await http.get(Uri.parse(URL));
-  var temp = UserInfo162.fromJson(jsonDecode(responce.body));
-  print(temp);
-  // print(temp.runtimeType);
-  return UserInfo162.fromJson(jsonDecode(responce.body));
+  final responce = await http.get(Uri.parse(URL));
+  List temp = jsonDecode(responce.body);
+  if (responce.statusCode == 200) {
+    List<UserInfo162> list = temp.map((e) => UserInfo162.fromJson(e)).toList();
+    return list;
+  } else {
+    throw Exception('Failed to Fetch Data');
+  }
 }

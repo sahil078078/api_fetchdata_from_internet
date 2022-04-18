@@ -30,7 +30,6 @@ Future<List<InfoAPI>> fetchData() async {
   if (response.statusCode == 200) {
     List temp = jsonDecode(response.body);
     List<InfoAPI> list = temp.map((e) => InfoAPI.fromJson(e)).toList();
-
     return list;
   } else {
     throw Exception("Failed to load data");
